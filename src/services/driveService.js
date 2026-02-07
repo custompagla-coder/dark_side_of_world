@@ -99,7 +99,8 @@ class DriveService {
      * @returns {string} Data URI
      */
     generateThumbnailDataUri(title, gradient) {
-        // Create SVG thumbnail
+        // Create SVG thumbnail - escape title for safety
+        const safeTitle = title.substring(0, 20).replace(/[<>&"']/g, '');
         const svg = `
             <svg width="720" height="405" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -111,10 +112,11 @@ class DriveService {
                 <rect width="720" height="405" fill="url(#grad)"/>
                 <circle cx="360" cy="202.5" r="40" fill="rgba(230, 57, 70, 0.9)"/>
                 <polygon points="350,185 350,220 380,202.5" fill="white"/>
-                <text x="360" y="300" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">${title.substring(0, 20)}</text>
+                <text x="360" y="300" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">${safeTitle}</text>
             </svg>
         `;
-        return `data:image/svg+xml;base64,${btoa(svg)}`;
+        // Use encodeURIComponent for Unicode support instead of btoa
+        return `data:image/svg+xml,${encodeURIComponent(svg)}`;
     }
 
     /**
