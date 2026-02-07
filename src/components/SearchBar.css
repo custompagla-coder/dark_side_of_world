@@ -1,0 +1,107 @@
+.search-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 0.8rem 1.2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.search-input-wrapper:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(230, 57, 70, 0.5);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.search-icon {
+    font-size: 1.2rem;
+    margin-right: 0.8rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within .search-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-clear {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}
+
+.search-clear:hover {
+    background: rgba(230, 57, 70, 0.2);
+    color: #e63946;
+    transform: scale(1.1);
+}
+
+.search-clear:active {
+    transform: scale(0.95);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .search-bar {
+        margin: 0 auto 1.5rem;
+    }
+
+    .search-input-wrapper {
+        padding: 0.7rem 1rem;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+    }
+
+    .search-icon {
+        font-size: 1.1rem;
+        margin-right: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input-wrapper {
+        padding: 0.6rem 0.9rem;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,419 @@
+/* Video Player Container */
+.video-player-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.video-player-container.fullscreen {
+    max-width: 100%;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-player-container.fullscreen .video-wrapper {
+    flex: 1;
+    min-height: auto;
+    max-height: none;
+    height: 100%;
+}
+
+.video-player-container.fullscreen .video-wrapper video {
+    max-height: 100vh;
+    height: 100%;
+}
+
+/* Video Wrapper */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    cursor: pointer;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    background: #000;
+}
+
+/* Center Play Button */
+.center-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.center-play-btn:hover {
+    background: rgba(255, 82, 82, 0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.center-play-btn svg {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    /* Visual centering for play icon */
+}
+
+/* Skip Indicators */
+.skip-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 30;
+    animation: skipFade 0.8s ease-out forwards;
+}
+
+.skip-indicator.skip-backward {
+    left: 15%;
+}
+
+.skip-indicator.skip-forward {
+    right: 15%;
+}
+
+.skip-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 18px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+@keyframes skipFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+}
+
+/* Video Controls */
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
+    padding: 60px 16px 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 25;
+}
+
+.video-controls.visible {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.progress-bar {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.progress-bar:hover {
+    height: 10px;
+}
+
+.progress-buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.progress-played {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #ff5252, #ff7b7b);
+    border-radius: 3px;
+    transition: width 0.1s linear;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+}
+
+/* Controls Row */
+.controls-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.time-display {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: monospace;
+    padding: 0 8px;
+}
+
+.controls-spacer {
+    flex: 1;
+}
+
+/* Speed Control */
+.speed-control {
+    position: relative;
+}
+
+.speed-btn {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+.speed-menu {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    background: rgba(28, 28, 28, 0.98);
+    border-radius: 12px;
+    padding: 8px 0;
+    min-width: 100px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.speed-menu button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.speed-menu button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.speed-menu button.active {
+    color: #ff5252;
+    font-weight: bold;
+}
+
+/* Error State */
+.video-player-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: #888;
+    font-size: 18px;
+}
+
+/* ========== MOBILE STYLES ========== */
+@media (max-width: 768px) {
+    .video-player-container {
+        border-radius: 12px;
+    }
+
+    .video-wrapper {
+        min-height: 350px;
+        max-height: 75vh;
+    }
+
+    .video-wrapper video {
+        max-height: 75vh;
+    }
+
+    /* ALWAYS show controls on mobile */
+    .video-controls {
+        opacity: 1 !important;
+        padding: 40px 12px 12px;
+    }
+
+    /* Larger touch targets */
+    .control-btn {
+        min-width: 48px;
+        min-height: 48px;
+        padding: 12px;
+    }
+
+    .control-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .center-play-btn {
+        width: 70px;
+        height: 70px;
+    }
+
+    .center-play-btn svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .progress-bar {
+        height: 8px;
+    }
+
+    .progress-handle {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+    }
+
+    .time-display {
+        font-size: 13px;
+    }
+
+    .skip-indicator.skip-backward {
+        left: 10%;
+    }
+
+    .skip-indicator.skip-forward {
+        right: 10%;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .video-player-container {
+        border-radius: 8px;
+    }
+
+    .video-wrapper {
+        min-height: 300px;
+        max-height: 70vh;
+    }
+
+    .video-wrapper video {
+        max-height: 70vh;
+    }
+
+    .center-play-btn {
+        width: 60px;
+        height: 60px;
+    }
+
+    .center-play-btn svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .controls-row {
+        gap: 4px;
+    }
+
+    .control-btn {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 8px;
+    }
+
+    .control-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .time-display {
+        font-size: 12px;
+        padding: 0 4px;
+    }
+
+    .speed-btn {
+        font-size: 12px;
+        min-width: 40px;
+    }
+}

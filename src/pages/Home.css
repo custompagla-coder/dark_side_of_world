@@ -1,0 +1,358 @@
+.home-page {
+    min-height: calc(100vh - 80px);
+    padding: 2rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #e63946, #f77f00, #e63946);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem 0;
+    animation: gradient-shift 3s ease infinite;
+    letter-spacing: -1px;
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Content */
+.home-content {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Search Results Info */
+.search-results-info {
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.search-results-info p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+.search-results-info strong {
+    color: #e63946;
+    font-weight: 600;
+}
+
+/* Setup Required */
+.setup-required {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.setup-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 600px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+}
+
+.setup-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.setup-card h2 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.setup-card>p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    margin: 0 0 2rem 0;
+    line-height: 1.6;
+}
+
+.setup-steps {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.setup-steps h3 {
+    color: #e63946;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.setup-steps ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+}
+
+.setup-steps li {
+    margin-bottom: 0.5rem;
+}
+
+.setup-steps code {
+    background: rgba(230, 57, 70, 0.1);
+    color: #e63946;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: 'Courier New', monospace;
+}
+
+.setup-help {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+}
+
+.setup-help strong {
+    color: #fff;
+}
+
+/* Error Container */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.error-card {
+    background: rgba(230, 57, 70, 0.1);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    text-align: center;
+}
+
+.error-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.error-card h2 {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.error-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin: 0 0 2rem 0;
+    line-height: 1.6;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #e63946, #f77f00);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+}
+
+.retry-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .home-page {
+        padding: 1.8rem 1.2rem;
+    }
+
+    .hero-section {
+        margin-bottom: 2.5rem;
+        padding: 1.8rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.6rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .hero-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+        letter-spacing: -0.8px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .search-results-info {
+        margin-bottom: 1.3rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .setup-card,
+    .error-card {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .setup-icon,
+    .error-icon {
+        font-size: 3rem;
+    }
+
+    .setup-card h2,
+    .error-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .setup-steps {
+        padding: 1rem;
+    }
+
+    .retry-button {
+        padding: 0.75rem 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-page {
+        padding: 1rem 0.8rem;
+    }
+
+    .hero-section {
+        margin-bottom: 1.5rem;
+        padding: 1.2rem 0;
+    }
+
+    .hero-title {
+        font-size: 1.9rem;
+        letter-spacing: -0.6px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .search-results-info {
+        padding: 0.7rem 0.9rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .setup-card,
+    .error-card {
+        padding: 1.5rem 1rem;
+        border-radius: 14px;
+    }
+
+    .setup-icon,
+    .error-icon {
+        font-size: 2.8rem;
+    }
+
+    .setup-card h2,
+    .error-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .setup-card>p,
+    .error-card p {
+        font-size: 0.95rem;
+    }
+
+    .setup-steps {
+        padding: 0.9rem;
+    }
+
+    .setup-steps ol {
+        padding-left: 1.3rem;
+        font-size: 0.9rem;
+    }
+
+    .setup-steps code {
+        font-size: 0.85rem;
+    }
+
+    .retry-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video List Generator - DriveStream</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f0f 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #e63946, #f77f00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #e63946;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #e63946;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #e63946, #f77f00);
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .output {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .example {
+            background: rgba(247, 127, 0, 0.1);
+            border-left: 3px solid #f77f00;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: #4caf50;
+        }
+
+        .info {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 3px solid #2196f3;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📹 Video List Generator</h1>
+        <p class="subtitle">Bulk convert video URLs to DriveStream format</p>
+
+        <div class="section">
+            <h2 style="margin-bottom: 1rem;">How to Use:</h2>
+            <div class="info">
+                <strong>Step 1:</strong> Upload all your videos to Catbox.moe or Pixeldrain.com<br>
+                <strong>Step 2:</strong> Copy all video URLs (one per line)<br>
+                <strong>Step 3:</strong> Paste below and click "Generate"<br>
+                <strong>Step 4:</strong> Copy output to <code>src/config/videoList.js</code>
+            </div>
+
+            <div class="example">
+                <strong>Example Input:</strong><br>
+                <code>
+https://files.catbox.moe/abc123.mp4<br>
+https://files.catbox.moe/def456.mp4<br>
+https://files.catbox.moe/ghi789.mp4
+                </code>
+            </div>
+
+            <label for="urls">Paste Video URLs (one per line):</label>
+            <textarea id="urls" placeholder="https://files.catbox.moe/abc123.mp4
+https://files.catbox.moe/def456.mp4
+https://files.catbox.moe/ghi789.mp4
+..."></textarea>
+
+            <button class="btn" onclick="generateConfig()">🚀 Generate Config</button>
+        </div>
+
+        <div class="section" id="outputSection" style="display: none;">
+            <h2 style="margin-bottom: 1rem;">✅ Generated Config</h2>
+            <div class="success">
+                Generated <span id="count">0</span> videos! Copy the code below and paste it into
+                <code>src/config/videoList.js</code>
+            </div>
+            <button class="btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            <div class="output" id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateConfig() {
+            const urlsText = document.getElementById('urls').value.trim();
+
+            if (!urlsText) {
+                alert('Please paste your video URLs first!');
+                return;
+            }
+
+            const urls = urlsText.split('\n').filter(url => url.trim());
+
+            if (urls.length === 0) {
+                alert('No valid URLs found!');
+                return;
+            }
+
+            let config = `/**
+ * Manual Video List Configuration
+ * Auto-generated with ${urls.length} videos
+ */
+
+export const MANUAL_VIDEOS = [\n`;
+
+            urls.forEach((url, index) => {
+                const trimmedUrl = url.trim();
+
+                // Try to extract filename from URL
+                let fileName = 'Video ' + (index + 1);
+                try {
+                    const urlParts = trimmedUrl.split('/');
+                    const lastPart = urlParts[urlParts.length - 1];
+                    if (lastPart && lastPart.length > 0) {
+                        fileName = lastPart.replace(/\.(mp4|webm|mov|mkv)$/i, '');
+                    }
+                } catch (e) {
+                    // Use default name
+                }
+
+                config += `    {
+        id: 'video-${index + 1}',
+        title: '${fileName}',
+        url: '${trimmedUrl}',
+        thumbnail: 'https://via.placeholder.com/720x405/1a1a2e/eee?text=${encodeURIComponent(fileName)}',
+    },\n`;
+            });
+
+            config += `];
+
+export const MANUAL_CONFIG = {
+    ENABLED: true,  // Set to true to use this video list
+    AUTO_THUMBNAIL: true,
+};`;
+
+            // Display output
+            document.getElementById('output').innerHTML = '<pre>' + escapeHtml(config) + '</pre>';
+            document.getElementById('outputSection').style.display = 'block';
+            document.getElementById('count').textContent = urls.length;
+
+            // Scroll to output
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                alert('✅ Copied to clipboard! Now paste it into src/config/videoList.js');
+            }).catch(err => {
+                alert('❌ Failed to copy. Please select and copy manually.');
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

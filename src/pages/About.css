@@ -1,0 +1,405 @@
+.about-page {
+    min-height: calc(100vh - 80px);
+    padding: 2rem 1.5rem;
+}
+
+.about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Hero Section */
+.about-hero {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.about-logo {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(230, 57, 70, 0.5));
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.about-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #e63946, #f77f00, #e63946);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem 0;
+    animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+}
+
+.about-tagline {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Content Sections */
+.about-content {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-section,
+.features-section,
+.tech-section,
+.info-section {
+    margin-bottom: 4rem;
+}
+
+.about-section h2,
+.features-section h2,
+.tech-section h2,
+.info-section h2 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    position: relative;
+    display: inline-block;
+}
+
+.about-section h2::after,
+.features-section h2::after,
+.tech-section h2::after,
+.info-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #e63946, #f77f00);
+    border-radius: 2px;
+}
+
+.about-section p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(230, 57, 70, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.8rem 0;
+}
+
+.feature-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Tech Grid */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.tech-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(247, 127, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+.tech-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+.tech-item strong {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.tech-item p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Info Section */
+.info-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin: 0 0 1.5rem 0;
+}
+
+.info-content strong {
+    color: #e63946;
+    font-weight: 600;
+}
+
+/* CTA Section */
+.cta-section {
+    margin-bottom: 2rem;
+}
+
+.cta-card {
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.15), rgba(247, 127, 0, 0.15));
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+}
+
+.cta-card h2 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.cta-card h2::after {
+    display: none;
+}
+
+.cta-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #e63946, #f77f00);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(230, 57, 70, 0.5);
+}
+
+.cta-button:active {
+    transform: translateY(-1px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .about-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .about-hero {
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .about-logo {
+        font-size: 3.5rem;
+    }
+
+    .about-title {
+        font-size: 2.5rem;
+    }
+
+    .about-tagline {
+        font-size: 1.2rem;
+    }
+
+    .about-section h2,
+    .features-section h2,
+    .tech-section h2,
+    .info-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .about-section,
+    .features-section,
+    .tech-section,
+    .info-section {
+        margin-bottom: 3rem;
+    }
+
+    .features-grid,
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .cta-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .cta-card h2 {
+        font-size: 1.6rem;
+    }
+
+    .cta-card p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-page {
+        padding: 1rem 0.8rem;
+    }
+
+    .about-logo {
+        font-size: 3rem;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-tagline {
+        font-size: 1.1rem;
+    }
+
+    .about-section h2,
+    .features-section h2,
+    .tech-section h2,
+    .info-section h2 {
+        font-size: 1.4rem;
+    }
+
+    .about-section p,
+    .info-content p {
+        font-size: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    .tech-icon {
+        font-size: 2rem;
+    }
+
+    .cta-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .cta-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
