@@ -6,32 +6,32 @@
 export const MANUAL_VIDEOS = [
     {
         id: 'video-1',
-        title: '9ypc7e',
+        title: 'Bon12',
         url: 'https://files.catbox.moe/9ypc7e.mp4',
     },
     {
         id: 'video-2',
-        title: 'yyd6wr',
+        title: 'Vhai bon',
         url: 'https://files.catbox.moe/yyd6wr.mp4',
     },
     {
         id: 'video-3',
-        title: 'myxqqq',
+        title: 'Ma22',
         url: 'https://files.catbox.moe/myxqqq.mp4',
     },
     {
         id: 'video-4',
-        title: 'vrkqcg',
+        title: 'Chudai bon',
         url: 'https://files.catbox.moe/vrkqcg.mp4',
     },
     {
         id: 'video-5',
-        title: 'achkeo',
+        title: 'Ma ke chuda',
         url: 'https://files.catbox.moe/achkeo.mp4',
     },
     {
         id: 'video-6',
-        title: '4jlmul',
+        title: 'Vhai bon ke korlo',
         url: 'https://files.catbox.moe/4jlmul.mp4',
     },
     {
