@@ -2,7 +2,7 @@
 
 export const APP_CONFIG = {
     // App name
-    name: 'DriveStream',
+    name: 'DarkStream',
 
     // App tagline
     tagline: 'Stream Your Videos, Your Way',
@@ -37,6 +37,15 @@ export const APP_CONFIG = {
     // Enable/disable features
     enableSearch: true,
     enableAboutPage: true,
+
+    // Categories for filtering videos (customize this list)
+    categories: [
+        'All',
+        'পারিবারিক',
+        'বাচ্চাদের সেক্স',
+        'অন্যান্য',
+        "রেপ",
+    ],
 
     // Videos per page (for future pagination)
     videosPerPage: 12,

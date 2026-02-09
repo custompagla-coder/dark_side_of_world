@@ -1,0 +1,118 @@
+.stories-page {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    padding-bottom: 100px;
+}
+
+.stories-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.stories-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stories-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Empty State */
+.stories-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.stories-empty .empty-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.stories-empty h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.stories-empty p {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stories-empty .hint {
+    color: var(--primary);
+    font-style: italic;
+}
+
+/* Stories Grid */
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.story-card {
+    position: relative;
+    aspect-ratio: 9/16;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: scale(1.03);
+}
+
+.story-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}
+
+.story-duration {
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.story-info h3 {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    line-height: 1.3;
+}
+
+@media (max-width: 600px) {
+    .stories-header h1 {
+        font-size: 2rem;
+    }
+
+    .stories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+}

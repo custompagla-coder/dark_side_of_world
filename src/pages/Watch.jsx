@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import VideoPlayer from '../components/VideoPlayer';
 import Loading from '../components/Loading';
+import SEO from '../components/SEO';
 import driveService from '../services/driveService';
 import { formatDate } from '../utils/helpers';
 import './Watch.css';
@@ -77,6 +78,12 @@ function Watch() {
 
     return (
         <div className="watch-page">
+            <SEO
+                title={video.title}
+                description={`Watch ${video.title} on DarkStream`}
+                image={video.thumbnail}
+                type="video.other"
+            />
             <div className="watch-container">
                 {/* Video Player Section */}
                 <div className="player-section">
@@ -113,16 +120,13 @@ function Watch() {
 
                         {/* Action Buttons */}
                         <div className="video-actions">
-                            <a
-                                href={video.downloadUrl}
-                                download
+                            <Link
+                                to="/about"
                                 className="action-button download-button"
-                                target="_blank"
-                                rel="noopener noreferrer"
                             >
                                 <span>⬇️</span>
                                 Download
-                            </a>
+                            </Link>
                             <Link to="/" className="action-button back-home-button">
                                 <span>🏠</span>
                                 Back to Home

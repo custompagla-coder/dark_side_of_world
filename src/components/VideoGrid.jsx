@@ -1,16 +1,10 @@
 import VideoCard from './VideoCard';
+import { SkeletonGrid } from './SkeletonCard';
 import './VideoGrid.css';
 
-function VideoGrid({ videos, loading }) {
+function VideoGrid({ videos, loading, onWatchLaterChange }) {
     if (loading) {
-        return (
-            <div className="video-grid-loading">
-                <div className="loading-spinner">
-                    <div className="spinner"></div>
-                    <p>Loading videos...</p>
-                </div>
-            </div>
-        );
+        return <SkeletonGrid count={8} />;
     }
 
     if (!videos || videos.length === 0) {
@@ -28,10 +22,15 @@ function VideoGrid({ videos, loading }) {
     return (
         <div className="video-grid">
             {videos.map((video) => (
-                <VideoCard key={video.id} video={video} />
+                <VideoCard
+                    key={video.id}
+                    video={video}
+                    onWatchLaterChange={onWatchLaterChange}
+                />
             ))}
         </div>
     );
 }
 
 export default VideoGrid;
+

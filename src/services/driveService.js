@@ -1,4 +1,5 @@
 import { MANUAL_VIDEOS, MANUAL_CONFIG } from '../config/videoList';
+import Fuse from 'fuse.js';
 
 /**
  * Video Service
@@ -85,6 +86,9 @@ class DriveService {
                 width: null,
                 height: null,
                 resolution: video.resolution || null,
+                resolution: video.resolution || null,
+                category: Array.isArray(video.category) ? video.category : (video.category ? [video.category] : ['Uncategorized']),
+                featured: video.featured || false,
                 createdTime: new Date(),
                 modifiedTime: new Date(),
                 fileExtension: 'mp4',
@@ -168,13 +172,16 @@ class DriveService {
             return videos;
         }
 
-        const searchTerm = query.toLowerCase().trim();
+        const options = {
+            keys: ['title', 'fileName'],
+            threshold: 0.4,
+            distance: 100,
+            minMatchCharLength: 2,
+            shouldSort: true
+        };
 
-        return videos.filter(video => {
-            const titleMatch = video.title.toLowerCase().includes(searchTerm);
-            const fileNameMatch = video.fileName.toLowerCase().includes(searchTerm);
-            return titleMatch || fileNameMatch;
-        });
+        const fuse = new Fuse(videos, options);
+        return fuse.search(query).map(result => result.item);
     }
 
     /**
@@ -206,6 +213,81 @@ class DriveService {
     clearCache() {
         this.cache = null;
         this.cacheTimestamp = null;
+    }
+
+    // --- User Preferences (LocalStorage) ---
+
+    /**
+     * Get Watch Later list
+     * @returns {Array} Array of video IDs
+     */
+    getWatchLater() {
+        try {
+            return JSON.parse(localStorage.getItem('drivestream_watch_later')) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    /**
+     * Toggle Watch Later status
+     * @param {string} videoId 
+     * @returns {boolean} New status (true = added, false = removed)
+     */
+    toggleWatchLater(videoId) {
+        const list = this.getWatchLater();
+        const index = list.indexOf(videoId);
+        let added = false;
+
+        if (index === -1) {
+            list.push(videoId);
+            added = true;
+        } else {
+            list.splice(index, 1);
+        }
+
+        localStorage.setItem('drivestream_watch_later', JSON.stringify(list));
+        return added;
+    }
+
+    /**
+     * Check if video is in Watch Later
+     * @param {string} videoId 
+     * @returns {boolean}
+     */
+    isInWatchLater(videoId) {
+        const list = this.getWatchLater();
+        return list.includes(videoId);
+    }
+
+    /**
+     * Save playback progress
+     * @param {string} videoId 
+     * @param {number} time (seconds)
+     */
+    saveProgress(videoId, time) {
+        try {
+            const history = JSON.parse(localStorage.getItem('drivestream_history')) || {};
+            history[videoId] = {
+                time,
+                updatedAt: Date.now()
+            };
+            localStorage.setItem('drivestream_history', JSON.stringify(history));
+        } catch (e) { }
+    }
+
+    /**
+     * Get saved progress
+     * @param {string} videoId 
+     * @returns {number} Time in seconds or 0
+     */
+    getProgress(videoId) {
+        try {
+            const history = JSON.parse(localStorage.getItem('drivestream_history')) || {};
+            return history[videoId]?.time || 0;
+        } catch (e) {
+            return 0;
+        }
     }
 }
 

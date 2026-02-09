@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import driveService from '../services/driveService';
 import './VideoPlayer.css';
 
 function VideoPlayer({ video }) {
@@ -13,10 +14,92 @@ function VideoPlayer({ video }) {
     const [volume, setVolume] = useState(1);
     const [isMuted, setIsMuted] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isPiP, setIsPiP] = useState(false);
     const [playbackRate, setPlaybackRate] = useState(1);
     const [showSpeedMenu, setShowSpeedMenu] = useState(false);
     const lastTapRef = useRef(0);
     const controlsTimeoutRef = useRef(null);
+
+    // Toggle Picture-in-Picture
+    const togglePiP = async () => {
+        if (!videoRef.current) return;
+        try {
+            if (document.pictureInPictureElement) {
+                await document.exitPictureInPicture();
+                setIsPiP(false);
+            } else if (document.pictureInPictureEnabled) {
+                await videoRef.current.requestPictureInPicture();
+                setIsPiP(true);
+            }
+        } catch (err) {
+            console.error('PiP error:', err);
+        }
+    };
+
+    // Keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // Only handle if this player is visible/active
+            if (!containerRef.current) return;
+
+            // Ignore if typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch (e.key.toLowerCase()) {
+                case ' ':
+                case 'k':
+                    e.preventDefault();
+                    togglePlay();
+                    break;
+                case 'arrowleft':
+                case 'j':
+                    e.preventDefault();
+                    skip(-10);
+                    break;
+                case 'arrowright':
+                case 'l':
+                    e.preventDefault();
+                    skip(10);
+                    break;
+                case 'arrowup':
+                    e.preventDefault();
+                    if (videoRef.current) {
+                        videoRef.current.volume = Math.min(1, videoRef.current.volume + 0.1);
+                        setVolume(videoRef.current.volume);
+                    }
+                    break;
+                case 'arrowdown':
+                    e.preventDefault();
+                    if (videoRef.current) {
+                        videoRef.current.volume = Math.max(0, videoRef.current.volume - 0.1);
+                        setVolume(videoRef.current.volume);
+                    }
+                    break;
+                case 'm':
+                    e.preventDefault();
+                    toggleMute();
+                    break;
+                case 'f':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'p':
+                    e.preventDefault();
+                    togglePiP();
+                    break;
+                case 'escape':
+                    if (isFullscreen) {
+                        document.exitFullscreen?.();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isFullscreen, duration]);
 
     // Format time to MM:SS
     const formatTime = (seconds) => {
@@ -151,7 +234,18 @@ function VideoPlayer({ video }) {
         const handlePlay = () => setIsPlaying(true);
         const handlePause = () => setIsPlaying(false);
         const handleTimeUpdate = () => setCurrentTime(videoEl.currentTime);
-        const handleLoadedMetadata = () => setDuration(videoEl.duration);
+        const handleLoadedMetadata = () => {
+            setDuration(videoEl.duration);
+
+            // Restore progress
+            const savedTime = driveService.getProgress(video.id);
+            if (savedTime > 0 && savedTime < videoEl.duration - 10) {
+                videoEl.currentTime = savedTime;
+                setCurrentTime(savedTime);
+                // Optional: show a toast or indicator
+                console.log(`Resumed video from ${savedTime}s`);
+            }
+        };
         const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
 
         videoEl.addEventListener('play', handlePlay);
@@ -160,12 +254,25 @@ function VideoPlayer({ video }) {
         videoEl.addEventListener('loadedmetadata', handleLoadedMetadata);
         document.addEventListener('fullscreenchange', handleFullscreenChange);
 
+        // Save progress interval
+        const saveInterval = setInterval(() => {
+            if (!videoEl.paused && videoEl.currentTime > 0) {
+                driveService.saveProgress(video.id, videoEl.currentTime);
+            }
+        }, 5000);
+
         return () => {
+            // Save on unmount
+            if (videoEl.currentTime > 0) {
+                driveService.saveProgress(video.id, videoEl.currentTime);
+            }
+
             videoEl.removeEventListener('play', handlePlay);
             videoEl.removeEventListener('pause', handlePause);
             videoEl.removeEventListener('timeupdate', handleTimeUpdate);
             videoEl.removeEventListener('loadedmetadata', handleLoadedMetadata);
             document.removeEventListener('fullscreenchange', handleFullscreenChange);
+            clearInterval(saveInterval);
         };
     }, [video]);
 
@@ -195,6 +302,9 @@ function VideoPlayer({ video }) {
                     src={video.streamUrl}
                     playsInline
                     preload="metadata"
+                    controlsList="nodownload noplaybackrate"
+                    disablePictureInPicture={false}
+                    onContextMenu={(e) => e.preventDefault()}
                 />
 
                 {/* Center Play Button - Shows when paused */}
@@ -291,6 +401,17 @@ function VideoPlayer({ video }) {
                             <svg viewBox="0 0 24 24" fill="white"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" /></svg>
                         )}
                     </button>
+
+                    {/* Picture-in-Picture */}
+                    {document.pictureInPictureEnabled && (
+                        <button className="control-btn" onClick={togglePiP} title="Picture in Picture (P)">
+                            {isPiP ? (
+                                <svg viewBox="0 0 24 24" fill="white"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" /></svg>
+                            ) : (
+                                <svg viewBox="0 0 24 24" fill="white"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z" /></svg>
+                            )}
+                        </button>
+                    )}
 
                     {/* Fullscreen */}
                     <button className="control-btn" onClick={toggleFullscreen}>

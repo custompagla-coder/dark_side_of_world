@@ -37,3 +37,28 @@ code {
   width: 100%;
   max-width: 100vw;
 }
+
+/* Video protection - disable right-click menu */
+video {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px);
+}
+
+/* Hide download button in native controls */
+video::-webkit-media-controls-download-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-overflow-button {
+  display: none !important;
+}

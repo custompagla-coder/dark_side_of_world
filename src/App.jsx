@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import MobileNav from './components/MobileNav';
 import Home from './pages/Home';
 import Watch from './pages/Watch';
 import About from './pages/About';
+import Stories from './pages/Stories';
 import './App.css';
 
 function App() {
@@ -15,16 +17,14 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/watch/:videoId" element={<Watch />} />
             <Route path="/about" element={<About />} />
+            <Route path="/stories" element={<Stories />} />
           </Routes>
         </main>
-        <footer className="app-footer">
-          <p>
-            Built with ❤️ using React + Google Drive API
-          </p>
-        </footer>
+        <MobileNav />
       </div>
     </Router>
   );
 }
 
 export default App;
+
