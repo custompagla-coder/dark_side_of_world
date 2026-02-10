@@ -49,7 +49,7 @@ export const MANUAL_VIDEOS = [
     {
         id: 'choto-5',
         title: 'Choto chele5',
-        url: 'https://files.catbox.moe/p3lzld.mp4',
+        url: 'https://files.catbox.moe/xfslji.mp4',
         thumbnail: 'https://files.catbox.moe/tn7vaq.png',
         category: 'New',
     },
