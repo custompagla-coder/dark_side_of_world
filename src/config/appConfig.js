@@ -41,6 +41,7 @@ export const APP_CONFIG = {
     // Categories for filtering videos (customize this list)
     categories: [
         'All',
+        'New',
         'পারিবারিক',
         'বাচ্চাদের সেক্স',
         'অন্যান্য',
